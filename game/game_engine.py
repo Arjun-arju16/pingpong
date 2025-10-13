@@ -1,8 +1,7 @@
 import pygame
 from .paddle import Paddle
 from .ball import Ball
-
-# Game Engine
+import time
 
 WHITE = (255, 255, 255)
 
@@ -12,6 +11,7 @@ class GameEngine:
         self.height = height
         self.paddle_width = 10
         self.paddle_height = 100
+        self.winning_score = 5  # Default winning score
 
         self.player = Paddle(10, height // 2 - 50, self.paddle_width, self.paddle_height)
         self.ai = Paddle(width - 20, height // 2 - 50, self.paddle_width, self.paddle_height)
@@ -53,3 +53,18 @@ class GameEngine:
         ai_text = self.font.render(str(self.ai_score), True, WHITE)
         screen.blit(player_text, (self.width//4, 20))
         screen.blit(ai_text, (self.width * 3//4, 20))
+
+    def check_game_over(self, screen):
+        if self.player_score >= self.winning_score or self.ai_score >= self.winning_score:
+            winner = "Player Wins!" if self.player_score > self.ai_score else "AI Wins!"
+            text = self.font.render(winner, True, WHITE)
+            screen.blit(text, (self.width // 2 - text.get_width()//2, self.height // 2 - text.get_height()//2))
+            pygame.display.flip()
+            time.sleep(2)  # Delay so player can see winner
+            return True
+        return False
+
+    def reset_scores(self):
+        self.player_score = 0
+        self.ai_score = 0
+        self.ball.reset()

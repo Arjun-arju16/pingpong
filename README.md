@@ -4,8 +4,7 @@ This project is a terminal-based ping pong game using **Pygame**. It introduces 
 
 ---
 
-## What’s Provided
-
+## What’s Provide
 A partially working version of a ping pong game with:
 
 - Player and AI-controlled paddles
